@@ -1,0 +1,1510 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEZZX BATTLE</title>
+<style>
+/*
+  NEZZX BATTLE
+  CSS-FIRST STATIC UI
+  No JavaScript.
+  All navigation, tabs, dropdowns, modals, sliders and visual states
+  are implemented with HTML + CSS form controls and pseudo-classes.
+*/
+:root{
+  --bg:#05070a;
+  --bg2:#080b0f;
+  --surface:#0b0f14;
+  --surface2:#0f141a;
+  --surface3:#131a21;
+  --surface4:#18212a;
+  --border:#1c2731;
+  --border2:#2a3742;
+  --text:#f1f5f8;
+  --muted:#7e8994;
+  --muted2:#56616c;
+  --blue:#69d8ff;
+  --blue2:#4a9fca;
+  --violet:#8d6cff;
+  --green:#55e2a0;
+  --red:#ff6479;
+  --yellow:#f4c85b;
+  --shadow:0 30px 80px rgba(0,0,0,.48);
+  --radius:15px;
+  --radius2:11px;
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  min-width:320px;
+  background:
+    radial-gradient(circle at 70% -20%,rgba(67,170,220,.12),transparent 32rem),
+    radial-gradient(circle at 20% 40%,rgba(111,77,204,.08),transparent 35rem),
+    var(--bg);
+  color:var(--text);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:14px;
+}
+body::-webkit-scrollbar{width:10px}
+body::-webkit-scrollbar-track{background:#05070a}
+body::-webkit-scrollbar-thumb{background:#26333e;border-radius:20px;border:2px solid #05070a}
+button,input,select{font:inherit}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer}
+input,select{outline:0}
+::selection{background:#69d8ff33;color:#fff}
+
+/* APP */
+.app{min-height:100vh}
+.sidebar{
+  position:fixed;
+  inset:0 auto 0 0;
+  width:238px;
+  z-index:100;
+  padding:16px 12px;
+  border-right:1px solid var(--border);
+  background:rgba(6,9,12,.88);
+  backdrop-filter:blur(22px);
+  display:flex;
+  flex-direction:column;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:4px 8px 23px;
+}
+.brand-mark{
+  width:37px;
+  height:37px;
+  border-radius:11px;
+  display:grid;
+  place-items:center;
+  color:#061016;
+  font-size:19px;
+  font-weight:1000;
+  background:linear-gradient(135deg,#eafcff,#6cdcff 50%,#795eea);
+  box-shadow:0 0 35px rgba(105,216,255,.16);
+}
+.brand-name{font-weight:950;letter-spacing:.7px;font-size:13px}
+.brand-sub{display:block;color:#53606b;font-size:7px;letter-spacing:1.8px;margin-top:3px}
+.side-scroll{overflow:auto;min-height:0}
+.side-label{
+  padding:13px 10px 7px;
+  color:#4e5964;
+  text-transform:uppercase;
+  font-size:8px;
+  letter-spacing:1.8px;
+  font-weight:900;
+}
+.nav-item{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  min-height:40px;
+  margin:2px 0;
+  padding:0 11px;
+  border:1px solid transparent;
+  border-radius:10px;
+  color:#7e8994;
+  font-size:11px;
+  font-weight:750;
+  transition:.18s var(--ease);
+}
+.nav-item:hover{
+  color:#e8eef2;
+  background:#10161c;
+  border-color:#1c2731;
+}
+.nav-icon{width:19px;text-align:center;color:#778590;font-size:14px}
+.nav-count{
+  margin-left:auto;
+  padding:3px 6px;
+  border-radius:20px;
+  color:#81909d;
+  background:#141c23;
+  font-size:8px;
+}
+.nav-item:target,
+.nav-item.active{color:#fff;background:#111820;border-color:#26333e}
+.side-user{
+  margin-top:auto;
+  padding:12px 7px 4px;
+  border-top:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+.avatar{
+  width:35px;
+  height:35px;
+  flex:0 0 35px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  color:#fff;
+  font-size:11px;
+  font-weight:950;
+  background:linear-gradient(135deg,#293b4a,#7058c8);
+}
+.side-user b{display:block;font-size:10px}
+.side-user small{display:block;margin-top:2px;color:#68747f;font-size:8px}
+
+/* MAIN */
+.main{margin-left:238px;min-height:100vh}
+.topbar{
+  height:67px;
+  position:sticky;
+  top:0;
+  z-index:80;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:0 25px;
+  background:rgba(5,7,10,.82);
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(22px);
+}
+.search{
+  width:min(540px,100%);
+  position:relative;
+}
+.search-icon{
+  position:absolute;
+  left:13px;
+  top:10px;
+  color:#65717c;
+  pointer-events:none;
+}
+.search input{
+  width:100%;
+  height:40px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:0 12px 0 38px;
+  background:#0a0f14;
+  color:#eef3f6;
+}
+.search input:focus{border-color:#3b5263}
+.top-actions{margin-left:auto;display:flex;align-items:center;gap:8px}
+.balance{
+  height:38px;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  padding:0 12px;
+  border:1px solid var(--border2);
+  border-radius:10px;
+  background:#0c1117;
+  font-size:10px;
+  font-weight:900;
+}
+.coin{color:var(--yellow)}
+.btn{
+  min-height:38px;
+  border:1px solid var(--border2);
+  border-radius:10px;
+  padding:0 13px;
+  color:#e8edf1;
+  background:#111820;
+  font-size:10px;
+  font-weight:900;
+  transition:.18s var(--ease);
+}
+.btn:hover{transform:translateY(-1px);background:#17212a;border-color:#465663}
+.btn-primary{
+  color:#061015;
+  border-color:transparent;
+  background:linear-gradient(135deg,#68d9ff,#7891ff);
+  box-shadow:0 12px 35px rgba(75,184,235,.13);
+}
+.btn-green{color:#71edb4;background:#0d2119;border-color:#254e3c}
+.btn-red{color:#ff8999;background:#281116;border-color:#55212c}
+
+/* PAGES */
+.page{
+  max-width:1520px;
+  margin:0 auto;
+  padding:29px;
+}
+.page-title{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:15px;
+  margin-bottom:17px;
+}
+.kicker{
+  color:var(--blue);
+  text-transform:uppercase;
+  font-size:8px;
+  letter-spacing:2px;
+  font-weight:950;
+}
+h1{
+  margin:6px 0 0;
+  font-size:31px;
+  line-height:1;
+  letter-spacing:-1.2px;
+}
+h2{margin:0;font-size:19px;letter-spacing:-.5px}
+h3{margin:0;font-size:13px}
+.muted{color:var(--muted)}
+.small{font-size:9px}
+.section{margin-top:30px}
+.section-head{
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  margin-bottom:12px;
+}
+.section-head span{font-size:9px;color:#68747f}
+
+/* HERO */
+.hero{
+  position:relative;
+  min-height:430px;
+  overflow:hidden;
+  display:flex;
+  align-items:flex-end;
+  padding:46px;
+  border:1px solid var(--border);
+  border-radius:23px;
+  background:
+    linear-gradient(115deg,rgba(105,216,255,.08),transparent 38%),
+    linear-gradient(290deg,rgba(141,108,255,.09),transparent 55%),
+    #0a0f14;
+  box-shadow:var(--shadow);
+}
+.hero:before{
+  content:"";
+  position:absolute;
+  width:650px;
+  height:650px;
+  right:-260px;
+  top:-300px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(105,216,255,.20),transparent 65%);
+}
+.hero:after{
+  content:"";
+  position:absolute;
+  width:520px;
+  height:520px;
+  left:35%;
+  bottom:-400px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(141,108,255,.13),transparent 65%);
+}
+.hero-content{position:relative;z-index:2}
+.hero-title{
+  margin:11px 0 19px;
+  font-size:clamp(55px,7.3vw,95px);
+  line-height:.84;
+  letter-spacing:-6px;
+  font-weight:1000;
+}
+.hero-copy{
+  max-width:620px;
+  color:#8c98a4;
+  font-size:12px;
+  line-height:1.8;
+}
+.hero-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
+
+/* STAT */
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+.stat{
+  min-height:92px;
+  padding:15px;
+  border:1px solid var(--border);
+  border-radius:13px;
+  background:#0a0f14;
+}
+.stat-label{
+  color:#64717d;
+  font-size:8px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+.stat-value{
+  display:block;
+  margin-top:7px;
+  font-size:23px;
+  line-height:1;
+  font-weight:950;
+}
+
+/* HORIZONTAL RAIL */
+.rail{
+  display:flex;
+  gap:11px;
+  overflow-x:auto;
+  padding:3px 2px 14px;
+  scroll-snap-type:x proximity;
+}
+.rail::-webkit-scrollbar{height:7px}
+.rail>*{scroll-snap-align:start;flex:0 0 auto}
+
+/* CASE */
+.case{
+  width:218px;
+  min-height:252px;
+  padding:12px;
+  border:1px solid var(--border);
+  border-radius:14px;
+  background:linear-gradient(180deg,#10161d,#090d12);
+  transition:.22s var(--ease);
+}
+.case:hover{
+  transform:translateY(-4px);
+  border-color:#3a4855;
+  box-shadow:0 20px 45px rgba(0,0,0,.42);
+}
+.case-art{
+  height:160px;
+  display:grid;
+  place-items:center;
+  border-radius:11px;
+  background:radial-gradient(circle at 50% 48%,var(--case-color),transparent 62%);
+}
+.case-art svg{
+  width:165px;
+  filter:drop-shadow(0 20px 17px rgba(0,0,0,.65));
+}
+.case-bottom{
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  margin-top:9px;
+}
+.case-name{font-size:11px;font-weight:900}
+.case-desc{display:block;color:#66727d;font-size:8px;margin-top:3px}
+.price{font-size:11px;font-weight:950}
+
+/* SKINS */
+.skin-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(205px,1fr));
+  gap:11px;
+}
+.skin{
+  overflow:hidden;
+  border:1px solid var(--border);
+  border-radius:14px;
+  background:linear-gradient(180deg,#10161d,#090d12);
+  transition:.2s var(--ease);
+}
+.skin:hover{
+  transform:translateY(-4px);
+  border-color:#3b4956;
+  box-shadow:0 20px 40px rgba(0,0,0,.4);
+}
+.skin-art{
+  height:162px;
+  display:grid;
+  place-items:center;
+  background:radial-gradient(circle,var(--glow),transparent 62%);
+}
+.skin-art svg{
+  width:95%;
+  height:125px;
+  filter:drop-shadow(0 18px 18px rgba(0,0,0,.7));
+  transition:.22s var(--ease);
+}
+.skin:hover .skin-art svg{transform:scale(1.06) rotate(-1deg)}
+.skin-info{
+  padding:11px;
+  border-top:1px solid #18212a;
+}
+.rarity{
+  color:var(--rarity);
+  font-size:8px;
+  letter-spacing:1.3px;
+  text-transform:uppercase;
+  font-weight:950;
+}
+.skin-name{margin-top:4px;font-size:11px;font-weight:850}
+.skin-meta{
+  display:flex;
+  justify-content:space-between;
+  margin-top:8px;
+  color:#68747f;
+  font-size:8px;
+}
+.skin-meta strong{color:#edf2f5;font-size:10px}
+
+/* PANELS */
+.layout{
+  display:grid;
+  grid-template-columns:minmax(0,1.45fr) minmax(285px,.65fr);
+  gap:12px;
+}
+.panel{
+  border:1px solid var(--border);
+  border-radius:16px;
+  background:#0a0f14;
+  overflow:hidden;
+}
+.panel-head{
+  min-height:51px;
+  padding:0 15px;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.panel-head b{font-size:11px}
+.panel-body{padding:15px}
+
+/* BATTLES */
+.battle-list{display:flex;flex-direction:column;gap:9px}
+.battle{
+  padding:14px;
+  border:1px solid var(--border);
+  border-radius:14px;
+  background:#0b1015;
+  transition:.18s var(--ease);
+}
+.battle:hover{border-color:#3b4a57}
+.battle-top{
+  display:flex;
+  justify-content:space-between;
+  color:#65727d;
+  font-size:8px;
+}
+.players{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:7px;
+  margin:12px 0;
+}
+.player{
+  min-width:0;
+  padding:8px;
+  text-align:center;
+  border:1px solid #1c2731;
+  border-radius:9px;
+  background:#080c11;
+}
+.player .avatar{margin:auto;width:28px;height:28px;font-size:8px}
+.player b{display:block;margin-top:5px;font-size:8px}
+.player small{color:#697580;font-size:7px}
+.mini-cases{
+  display:flex;
+  gap:6px;
+  overflow:hidden;
+}
+.mini-case{
+  width:65px;
+  height:48px;
+  flex:0 0 65px;
+  display:grid;
+  place-items:center;
+  border:1px solid #202b35;
+  border-radius:8px;
+  background:#10161c;
+}
+.mini-case svg{width:49px}
+.battle-foot{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:12px;
+}
+
+/* ACTIVITY */
+.activity{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  padding:9px 0;
+  border-bottom:1px solid #162029;
+}
+.activity:last-child{border-bottom:0}
+.activity .avatar{width:28px;height:28px;flex-basis:28px;font-size:8px}
+.activity-grow{flex:1;min-width:0}
+.activity-grow b{display:block;font-size:9px}
+.activity-grow span{
+  display:block;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  color:#66727d;
+  font-size:8px;
+}
+.activity strong{font-size:9px;color:var(--green)}
+
+/* TABS */
+.tabs{
+  display:flex;
+  gap:5px;
+  overflow-x:auto;
+  padding-bottom:3px;
+}
+.tab{
+  flex:0 0 auto;
+  padding:8px 12px;
+  border:1px solid var(--border);
+  border-radius:9px;
+  color:#75818c;
+  background:#090e13;
+  font-size:8px;
+  font-weight:900;
+}
+.tab:hover{color:#fff;border-color:#3b4a57}
+
+/* CASE OPENING */
+.open-stage{
+  min-height:570px;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  border:1px solid var(--border);
+  border-radius:20px;
+  background:
+    radial-gradient(circle at 50% 45%,rgba(105,216,255,.09),transparent 45%),
+    #0a0f14;
+}
+.roller{
+  width:min(1120px,100%);
+  height:245px;
+  margin:25px 0;
+  position:relative;
+  overflow:hidden;
+  border-top:1px solid #17212a;
+  border-bottom:1px solid #17212a;
+  background:#080c10;
+}
+.roller:before,.roller:after{
+  content:"";
+  position:absolute;
+  z-index:3;
+  top:0;
+  bottom:0;
+  width:170px;
+  pointer-events:none;
+}
+.roller:before{left:0;background:linear-gradient(90deg,#080c10,transparent)}
+.roller:after{right:0;background:linear-gradient(270deg,#080c10,transparent)}
+.roller-track{
+  position:absolute;
+  inset:0 auto 0 0;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding-left:15px;
+  width:max-content;
+  animation:caseRoll 6s cubic-bezier(.08,.78,.08,1) infinite alternate;
+}
+@keyframes caseRoll{
+  from{transform:translateX(0)}
+  to{transform:translateX(-1080px)}
+}
+.marker{
+  position:absolute;
+  z-index:6;
+  top:0;
+  bottom:0;
+  left:50%;
+  width:2px;
+  background:var(--blue);
+  box-shadow:0 0 22px rgba(105,216,255,.9);
+}
+.marker:before,.marker:after{
+  content:"";
+  position:absolute;
+  left:50%;
+  width:0;
+  height:0;
+  transform:translateX(-50%);
+  border-left:6px solid transparent;
+  border-right:6px solid transparent;
+}
+.marker:before{top:0;border-top:9px solid var(--blue)}
+.marker:after{bottom:0;border-bottom:9px solid var(--blue)}
+.open-controls{display:flex;align-items:center;gap:8px}
+
+/* UPGRADE */
+.upgrade-grid{
+  display:grid;
+  grid-template-columns:1fr 1.05fr 1fr;
+  gap:12px;
+}
+.upgrade-box{
+  min-height:515px;
+  padding:17px;
+  border:1px solid var(--border);
+  border-radius:17px;
+  background:#0a0f14;
+}
+.item-preview{
+  min-height:285px;
+  margin-top:12px;
+  display:grid;
+  place-items:center;
+  border:1px dashed #293640;
+  border-radius:13px;
+  background:#080c11;
+}
+.item-preview svg{width:90%;height:195px;filter:drop-shadow(0 20px 20px #000)}
+.item-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-top:10px;
+}
+.chance-box{text-align:center}
+.chance{
+  margin:7px 0;
+  font-size:58px;
+  line-height:1;
+  letter-spacing:-4px;
+  font-weight:1000;
+}
+.multiplier{color:var(--blue);font-size:10px;font-weight:950}
+.ring{
+  width:190px;
+  height:190px;
+  margin:24px auto 18px;
+  display:grid;
+  place-items:center;
+  position:relative;
+  border-radius:50%;
+  background:conic-gradient(var(--blue) 0 50%,#1b252e 50% 100%);
+}
+.ring:before{
+  content:"";
+  position:absolute;
+  inset:12px;
+  border-radius:50%;
+  background:#0a0f14;
+}
+.ring-content{position:relative}
+.ring-content b{display:block;font-size:27px}
+.ring-content small{
+  display:block;
+  margin-top:3px;
+  color:#68747f;
+  text-transform:uppercase;
+  font-size:7px;
+  letter-spacing:1px;
+}
+.fake-range{
+  position:relative;
+  height:7px;
+  margin-top:18px;
+  border-radius:10px;
+  background:#202b34;
+}
+.fake-range:before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  width:50%;
+  height:100%;
+  border-radius:10px;
+  background:var(--blue);
+}
+.fake-range:after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:20px;
+  height:20px;
+  transform:translate(-50%,-50%);
+  border:3px solid var(--blue);
+  border-radius:50%;
+  background:#f3fbff;
+  box-shadow:0 0 20px rgba(105,216,255,.45);
+}
+.quick-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:5px;
+  margin-top:12px;
+}
+.quick-grid a{
+  padding:8px 2px;
+  text-align:center;
+  border:1px solid var(--border);
+  border-radius:8px;
+  color:#76828d;
+  background:#090e13;
+  font-size:8px;
+}
+
+/* GAMES */
+.game-stage{
+  min-height:560px;
+  padding:60px 20px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+.multiplier-big{
+  margin:10px 0 24px;
+  font-size:92px;
+  line-height:1;
+  letter-spacing:-7px;
+  font-weight:1000;
+}
+.fake-progress{
+  width:min(700px,100%);
+  height:7px;
+  overflow:hidden;
+  border-radius:20px;
+  background:#1b242d;
+}
+.fake-progress span{
+  display:block;
+  width:72%;
+  height:100%;
+  background:linear-gradient(90deg,var(--blue),var(--violet));
+}
+.game-buttons{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;margin-top:25px}
+
+/* MINES */
+.mine-grid{
+  width:min(530px,100%);
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:7px;
+}
+.mine-cell{
+  aspect-ratio:1;
+  display:grid;
+  place-items:center;
+  border:1px solid #26333e;
+  border-radius:10px;
+  background:linear-gradient(145deg,#121a21,#090d12);
+  color:#56616c;
+  font-size:18px;
+  transition:.16s var(--ease);
+}
+.mine-cell:hover{transform:translateY(-2px);border-color:#4b5d6b}
+.mine-cell:focus{color:var(--green);border-color:#3c6f58;background:#0d2119}
+
+/* KENO */
+.numbers{
+  width:min(760px,100%);
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(8,1fr);
+  gap:7px;
+}
+.num{
+  height:48px;
+  border:1px solid #26313b;
+  border-radius:9px;
+  color:#74808b;
+  background:#090e13;
+  font-size:10px;
+  font-weight:900;
+}
+.num:hover,.num:focus{color:#effcff;border-color:#4a7d96;background:#10212b}
+
+/* PROFILE */
+.profile-grid{
+  display:grid;
+  grid-template-columns:275px 1fr;
+  gap:12px;
+}
+.profile-card{text-align:center}
+.big-avatar{
+  width:94px;
+  height:94px;
+  margin:13px auto;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  font-size:29px;
+  font-weight:1000;
+  background:linear-gradient(135deg,#263b4b,#7158c9);
+}
+.progress{
+  height:7px;
+  overflow:hidden;
+  border-radius:10px;
+  background:#1c252e;
+}
+.progress span{
+  display:block;
+  width:74%;
+  height:100%;
+  background:linear-gradient(90deg,var(--blue),var(--violet));
+}
+
+/* TABLE */
+.table-wrap{overflow:auto}
+table{width:100%;border-collapse:collapse}
+th,td{
+  padding:13px;
+  border-bottom:1px solid #17212a;
+  text-align:left;
+  font-size:9px;
+  white-space:nowrap;
+}
+th{
+  color:#5e6a75;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  font-size:7px;
+}
+td strong{font-size:10px}
+
+/* FORMS */
+.form{display:grid;gap:10px}
+.field label{
+  display:block;
+  margin-bottom:5px;
+  color:#73808b;
+  font-size:8px;
+  text-transform:uppercase;
+  letter-spacing:.8px;
+}
+.field input,.field select{
+  width:100%;
+  height:41px;
+  padding:0 11px;
+  border:1px solid var(--border);
+  border-radius:9px;
+  color:#edf2f5;
+  background:#080d12;
+}
+.field input:focus,.field select:focus{border-color:#456073}
+
+/* FAIRNESS */
+.code-box{
+  padding:13px;
+  border:1px solid #202b34;
+  border-radius:10px;
+  background:#080c10;
+  color:#87939d;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:9px;
+  line-height:1.8;
+  word-break:break-all;
+}
+
+/* FOOTER */
+.footer{
+  padding:45px 0 25px;
+  color:#424e59;
+  text-align:center;
+  font-size:8px;
+  letter-spacing:.7px;
+}
+
+/* CSS-ONLY TAB / MODAL / DRAWER STATES */
+#open-case,
+#battle-create,
+#profile-panel,
+#settings-panel{display:none}
+#open-case:target,
+#battle-create:target,
+#profile-panel:target,
+#settings-panel:target{
+  display:grid;
+}
+.modal{
+  position:fixed;
+  z-index:500;
+  inset:0;
+  place-items:center;
+  padding:20px;
+  background:rgba(0,0,0,.76);
+  backdrop-filter:blur(10px);
+}
+.modal-card{
+  width:min(560px,100%);
+  padding:20px;
+  border:1px solid #2a3742;
+  border-radius:17px;
+  background:#0d1319;
+  box-shadow:0 40px 100px #000;
+}
+.modal-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:16px;
+}
+.close{
+  width:32px;
+  height:32px;
+  display:grid;
+  place-items:center;
+  border:0;
+  border-radius:9px;
+  color:#9aa5ae;
+  background:#172029;
+}
+
+/* STATIC DROP CARDS */
+.drop-line{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:7px;
+}
+.drop{
+  min-height:120px;
+  padding:10px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  border:1px solid var(--border);
+  border-radius:11px;
+  background:#090e13;
+}
+.drop .bar{height:3px;border-radius:4px;background:var(--rarity)}
+.drop strong{font-size:9px}
+.drop small{color:#65727d;font-size:7px}
+
+/* MOBILE */
+.mobile-nav{display:none}
+@media(max-width:1080px){
+  .sidebar{width:72px}
+  .brand{justify-content:center;padding-left:0;padding-right:0}
+  .brand-name,.brand-sub,.side-label,.nav-text,.nav-count,.side-user>div:not(.avatar){display:none}
+  .nav-item{justify-content:center;padding:0}
+  .side-user{justify-content:center}
+  .main{margin-left:72px}
+  .upgrade-grid{grid-template-columns:1fr 1fr}
+  .upgrade-box:last-child{grid-column:1/-1}
+}
+@media(max-width:760px){
+  body{font-size:13px}
+  .sidebar{display:none}
+  .main{margin-left:0}
+  .topbar{height:59px;padding:0 10px}
+  .top-actions .btn{display:none}
+  .balance{padding:0 9px}
+  .page{padding:15px}
+  .hero{min-height:480px;padding:27px}
+  .hero-title{font-size:54px;letter-spacing:-4px}
+  .stats{grid-template-columns:1fr 1fr}
+  .layout,.upgrade-grid,.profile-grid{grid-template-columns:1fr}
+  .upgrade-box:last-child{grid-column:auto}
+  .skin-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+  .skin-art{height:130px}
+  .skin-art svg{height:100px}
+  .players{grid-template-columns:1fr 1fr}
+  .numbers{grid-template-columns:repeat(5,1fr)}
+  .multiplier-big{font-size:67px}
+  .mobile-nav{
+    position:fixed;
+    z-index:300;
+    left:8px;
+    right:8px;
+    bottom:8px;
+    height:61px;
+    padding:4px;
+    display:flex;
+    align-items:center;
+    justify-content:space-around;
+    border:1px solid #2a3641;
+    border-radius:18px;
+    background:rgba(10,15,20,.9);
+    backdrop-filter:blur(20px);
+    box-shadow:0 20px 60px #000;
+  }
+  .mobile-nav a{
+    min-width:52px;
+    color:#68747f;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:4px;
+    font-size:7px;
+  }
+  .mobile-nav a:first-child{color:#effaff}
+  .mobile-nav i{font-style:normal;font-size:17px}
+  .footer{padding-bottom:90px}
+}
+@media(max-width:460px){
+  .topbar .search{max-width:none}
+  .skin-grid{grid-template-columns:1fr 1fr}
+  .stats{gap:7px}
+  .stat{padding:12px}
+  .stat-value{font-size:19px}
+  .case{width:190px}
+  .case-art{height:140px}
+}
+
+/* SVG VISUAL LANGUAGE */
+svg{overflow:visible}
+.weapon-stroke{stroke:#070a0d;stroke-width:5;stroke-linejoin:round}
+.weapon-highlight{stroke:#fff;opacity:.35;stroke-width:4}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-mark">N</div>
+    <div>
+      <div class="brand-name">NEZZX BATTLE</div>
+      <span class="brand-sub">VIRTUAL SKIN ARENA</span>
+    </div>
+  </div>
+
+  <div class="side-scroll">
+    <div class="side-label">Play</div>
+    <a class="nav-item active" href="#home"><span class="nav-icon">⌂</span><span class="nav-text">Home</span></a>
+    <a class="nav-item" href="#battles"><span class="nav-icon">⚔</span><span class="nav-text">Battles</span><span class="nav-count">24</span></a>
+    <a class="nav-item" href="#cases"><span class="nav-icon">▣</span><span class="nav-text">Cases</span></a>
+    <a class="nav-item" href="#upgrader"><span class="nav-icon">↗</span><span class="nav-text">Upgrader</span></a>
+    <a class="nav-item" href="#slide"><span class="nav-icon">→</span><span class="nav-text">Slide</span></a>
+    <a class="nav-item" href="#mines"><span class="nav-icon">◆</span><span class="nav-text">Mines</span></a>
+    <a class="nav-item" href="#chicken"><span class="nav-icon">◇</span><span class="nav-text">Chicken</span></a>
+    <a class="nav-item" href="#keno"><span class="nav-icon">#</span><span class="nav-text">Keno</span></a>
+
+    <div class="side-label">Account</div>
+    <a class="nav-item" href="#inventory"><span class="nav-icon">▤</span><span class="nav-text">Inventory</span></a>
+    <a class="nav-item" href="#rewards"><span class="nav-icon">✦</span><span class="nav-text">Rewards</span></a>
+    <a class="nav-item" href="#leaderboard"><span class="nav-icon">♛</span><span class="nav-text">Leaderboard</span></a>
+
+    <div class="side-label">System</div>
+    <a class="nav-item" href="#fairness"><span class="nav-icon">✓</span><span class="nav-text">Fairness</span></a>
+    <a class="nav-item" href="#profile"><span class="nav-icon">●</span><span class="nav-text">Profile</span></a>
+  </div>
+
+  <div class="side-user">
+    <div class="avatar">N</div>
+    <div>
+      <b>nezzx</b>
+      <small>Level 27 · 1,248.40</small>
+    </div>
+  </div>
+</aside>
+
+<main class="main">
+
+<header class="topbar">
+  <div class="search">
+    <span class="search-icon">⌕</span>
+    <input type="search" placeholder="Search skins, cases, battles...">
+  </div>
+  <div class="top-actions">
+    <a class="btn" href="#profile">nezzx</a>
+    <div class="balance"><span class="coin">◈</span> 1,248.40</div>
+    <a class="btn btn-primary" href="#rewards">+ Add credits</a>
+  </div>
+</header>
+
+<!-- HOME -->
+<section class="page" id="home">
+  <div class="hero">
+    <div class="hero-content">
+      <div class="kicker">NEZZX BATTLE · SEASON 07</div>
+      <div class="hero-title">PLAY.<br>OPEN.<br>WIN.</div>
+      <div class="hero-copy">
+        Premium virtual skin battles, cases, upgrades and collection systems
+        inside a dense dark arena interface. This build is a static visual
+        prototype and uses no real-money transactions.
+      </div>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#battles">Enter Battles →</a>
+        <a class="btn" href="#cases">Open Cases</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="section stats">
+    <div class="stat"><span class="stat-label">Live battles</span><strong class="stat-value">24</strong></div>
+    <div class="stat"><span class="stat-label">Cases opened</span><strong class="stat-value">18.4K</strong></div>
+    <div class="stat"><span class="stat-label">Item catalog</span><strong class="stat-value">2,486</strong></div>
+    <div class="stat"><span class="stat-label">Online now</span><strong class="stat-value">1,927</strong></div>
+  </div>
+
+  <div class="section">
+    <div class="section-head"><h2>Featured Cases</h2><span>Horizontal scroll</span></div>
+    <div class="rail">
+      <article class="case" style="--case-color:#67d5ff33">
+        <div class="case-art">
+          <svg viewBox="0 0 220 160"><rect x="37" y="30" width="145" height="100" rx="11" fill="#18242e" stroke="#67d5ff" stroke-width="3"/><rect x="52" y="46" width="115" height="67" rx="6" fill="#090e13"/><path d="M65 68h90M65 83h63M65 98h76" stroke="#67d5ff" stroke-width="5" opacity=".55"/><rect x="98" y="126" width="24" height="13" rx="3" fill="#67d5ff"/></svg>
+        </div>
+        <div class="case-bottom"><div><b class="case-name">Nezzx Elite</b><small class="case-desc">28 possible items</small></div><span class="price">$24.00</span></div>
+      </article>
+      <article class="case" style="--case-color:#8d6cff33">
+        <div class="case-art">
+          <svg viewBox="0 0 220 160"><rect x="37" y="30" width="145" height="100" rx="11" fill="#211b39" stroke="#8d6cff" stroke-width="3"/><rect x="52" y="46" width="115" height="67" rx="6" fill="#090e13"/><path d="M65 68h90M65 83h63M65 98h76" stroke="#8d6cff" stroke-width="5" opacity=".55"/><rect x="98" y="126" width="24" height="13" rx="3" fill="#8d6cff"/></svg>
+        </div>
+        <div class="case-bottom"><div><b class="case-name">Phantom</b><small class="case-desc">19 possible items</small></div><span class="price">$12.00</span></div>
+      </article>
+      <article class="case" style="--case-color:#ff72bd33">
+        <div class="case-art">
+          <svg viewBox="0 0 220 160"><rect x="37" y="30" width="145" height="100" rx="11" fill="#391d31" stroke="#ff72bd" stroke-width="3"/><rect x="52" y="46" width="115" height="67" rx="6" fill="#090e13"/><path d="M65 68h90M65 83h63M65 98h76" stroke="#ff72bd" stroke-width="5" opacity=".55"/><rect x="98" y="126" width="24" height="13" rx="3" fill="#ff72bd"/></svg>
+        </div>
+        <div class="case-bottom"><div><b class="case-name">Aurora</b><small class="case-desc">35 possible items</small></div><span class="price">$49.00</span></div>
+      </article>
+      <article class="case" style="--case-color:#dcecff22">
+        <div class="case-art">
+          <svg viewBox="0 0 220 160"><rect x="37" y="30" width="145" height="100" rx="11" fill="#202832" stroke="#dcecff" stroke-width="3"/><rect x="52" y="46" width="115" height="67" rx="6" fill="#090e13"/><path d="M65 68h90M65 83h63M65 98h76" stroke="#dcecff" stroke-width="5" opacity=".5"/><rect x="98" y="126" width="24" height="13" rx="3" fill="#dcecff"/></svg>
+        </div>
+        <div class="case-bottom"><div><b class="case-name">Blackout</b><small class="case-desc">42 possible items</small></div><span class="price">$99.00</span></div>
+      </article>
+      <article class="case" style="--case-color:#7d92ff33">
+        <div class="case-art">
+          <svg viewBox="0 0 220 160"><rect x="37" y="30" width="145" height="100" rx="11" fill="#202944" stroke="#7d92ff" stroke-width="3"/><rect x="52" y="46" width="115" height="67" rx="6" fill="#090e13"/><path d="M65 68h90M65 83h63M65 98h76" stroke="#7d92ff" stroke-width="5" opacity=".55"/><rect x="98" y="126" width="24" height="13" rx="3" fill="#7d92ff"/></svg>
+        </div>
+        <div class="case-bottom"><div><b class="case-name">Nightfall</b><small class="case-desc">31 possible items</small></div><span class="price">$74.00</span></div>
+      </article>
+      <article class="case" style="--case-color:#ffc85c33">
+        <div class="case-art">
+          <svg viewBox="0 0 220 160"><rect x="37" y="30" width="145" height="100" rx="11" fill="#3c321c" stroke="#ffc85c" stroke-width="3"/><rect x="52" y="46" width="115" height="67" rx="6" fill="#090e13"/><path d="M65 68h90M65 83h63M65 98h76" stroke="#ffc85c" stroke-width="5" opacity=".55"/><rect x="98" y="126" width="24" height="13" rx="3" fill="#ffc85c"/></svg>
+        </div>
+        <div class="case-bottom"><div><b class="case-name">Royal</b><small class="case-desc">51 possible items</small></div><span class="price">$199.00</span></div>
+      </article>
+    </div>
+  </div>
+
+  <div class="section layout">
+    <div class="panel">
+      <div class="panel-head"><b>Live Battles</b><a class="btn" href="#battles">View all</a></div>
+      <div class="panel-body">
+        <div class="battle-list">
+          <article class="battle"><div class="battle-top"><span>#9180 · 1m ago</span><span>4 players</span></div><div class="players"><div class="player"><div class="avatar">N</div><b>nezzx</b><small>$84.20</small></div><div class="player"><div class="avatar">V</div><b>void</b><small>$71.00</small></div><div class="player"><div class="avatar">A</div><b>aero</b><small>$65.20</small></div><div class="player"><div class="avatar">K</div><b>kryp</b><small>$82.00</small></div></div><div class="battle-foot"><span class="small muted">◈ 302.40 value</span><a class="btn btn-primary" href="#battles">JOIN</a></div></article>
+          <article class="battle"><div class="battle-top"><span>#9179 · 2m ago</span><span>3 players</span></div><div class="players"><div class="player"><div class="avatar">Q</div><b>qbit</b><small>$54.20</small></div><div class="player"><div class="avatar">M</div><b>mira</b><small>$67.00</small></div><div class="player"><div class="avatar">R</div><b>rune</b><small>$42.20</small></div></div><div class="battle-foot"><span class="small muted">◈ 163.40 value</span><a class="btn btn-primary" href="#battles">JOIN</a></div></article>
+        </div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><b>Live Activity</b><span style="color:var(--green);font-size:8px">● LIVE</span></div>
+      <div class="panel-body">
+        <div class="activity"><div class="avatar">N</div><div class="activity-grow"><b>nezzx</b><span>won AK-47 · Neon Rider</span></div><strong>$84</strong></div>
+        <div class="activity"><div class="avatar">V</div><div class="activity-grow"><b>void</b><span>won AWP · Fever Dream</span></div><strong>$72</strong></div>
+        <div class="activity"><div class="avatar">A</div><div class="activity-grow"><b>aero</b><span>won Glock-18 · Neo-Noir</span></div><strong>$42</strong></div>
+        <div class="activity"><div class="avatar">Q</div><div class="activity-grow"><b>qbit</b><span>won USP-S · Kill Confirmed</span></div><strong>$118</strong></div>
+        <div class="activity"><div class="avatar">K</div><div class="activity-grow"><b>kryp</b><span>won Desert Eagle · Printstream</span></div><strong>$92</strong></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">NEZZX BATTLE · CSS-first static interface · Virtual credits only</div>
+</section>
+
+<!-- BATTLES -->
+<section class="page" id="battles">
+  <div class="page-title">
+    <div><div class="kicker">PVP ARENA</div><h1>Battles</h1></div>
+    <a class="btn btn-primary" href="#battle-create">+ Create Battle</a>
+  </div>
+  <div class="tabs">
+    <a class="tab" href="#battles">All</a><a class="tab" href="#battles">2 Players</a><a class="tab" href="#battles">3 Players</a><a class="tab" href="#battles">4 Players</a><a class="tab" href="#battles">High Stakes</a>
+  </div>
+  <div class="section layout">
+    <div class="battle-list">
+      <article class="battle"><div class="battle-top"><span>#9180 · LIVE</span><span>4 players</span></div><div class="players"><div class="player"><div class="avatar">N</div><b>nezzx</b><small>$84.20</small></div><div class="player"><div class="avatar">V</div><b>void</b><small>$71.00</small></div><div class="player"><div class="avatar">A</div><b>aero</b><small>$65.20</small></div><div class="player"><div class="avatar">K</div><b>kryp</b><small>$82.00</small></div></div><div class="mini-cases"><div class="mini-case">CASE</div><div class="mini-case">CASE</div><div class="mini-case">CASE</div></div><div class="battle-foot"><span class="small muted">◈ 302.40</span><a class="btn btn-primary" href="#battle-create">JOIN</a></div></article>
+      <article class="battle"><div class="battle-top"><span>#9179 · LIVE</span><span>3 players</span></div><div class="players"><div class="player"><div class="avatar">Q</div><b>qbit</b><small>$54.20</small></div><div class="player"><div class="avatar">M</div><b>mira</b><small>$67.00</small></div><div class="player"><div class="avatar">R</div><b>rune</b><small>$42.20</small></div></div><div class="mini-cases"><div class="mini-case">CASE</div><div class="mini-case">CASE</div><div class="mini-case">CASE</div></div><div class="battle-foot"><span class="small muted">◈ 163.40</span><a class="btn btn-primary" href="#battle-create">JOIN</a></div></article>
+      <article class="battle"><div class="battle-top"><span>#9178 · LIVE</span><span>2 players</span></div><div class="players"><div class="player"><div class="avatar">X</div><b>xeno</b><small>$122.20</small></div><div class="player"><div class="avatar">Z</div><b>zero</b><small>$118.00</small></div></div><div class="mini-cases"><div class="mini-case">CASE</div><div class="mini-case">CASE</div><div class="mini-case">CASE</div></div><div class="battle-foot"><span class="small muted">◈ 240.20</span><a class="btn btn-primary" href="#battle-create">JOIN</a></div></article>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><b>Battle stats</b></div>
+      <div class="panel-body">
+        <div class="stats" style="grid-template-columns:1fr 1fr">
+          <div class="stat"><span class="stat-label">Active</span><strong class="stat-value">24</strong></div>
+          <div class="stat"><span class="stat-label">Players</span><strong class="stat-value">91</strong></div>
+          <div class="stat"><span class="stat-label">Volume</span><strong class="stat-value">$8.2K</strong></div>
+          <div class="stat"><span class="stat-label">Average</span><strong class="stat-value">$91</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASES -->
+<section class="page" id="cases">
+  <div class="page-title">
+    <div><div class="kicker">DROP SYSTEM</div><h1>Cases</h1></div>
+    <a class="btn" href="#cases">Popular first</a>
+  </div>
+  <div class="tabs"><a class="tab" href="#cases">Official</a><a class="tab" href="#cases">Community</a><a class="tab" href="#cases">Popular</a><a class="tab" href="#cases">Newest</a></div>
+  <div class="section skin-grid">
+    <a class="case" href="#open-case" style="--case-color:#67d5ff33"><div class="case-art"><div style="font-size:55px;color:#67d5ff">N</div></div><div class="case-bottom"><div><b class="case-name">Nezzx Elite</b><small class="case-desc">28 possible items</small></div><span class="price">$24.00</span></div></a>
+    <a class="case" href="#open-case" style="--case-color:#8d6cff33"><div class="case-art"><div style="font-size:55px;color:#8d6cff">P</div></div><div class="case-bottom"><div><b class="case-name">Phantom</b><small class="case-desc">19 possible items</small></div><span class="price">$12.00</span></div></a>
+    <a class="case" href="#open-case" style="--case-color:#ff72bd33"><div class="case-art"><div style="font-size:55px;color:#ff72bd">A</div></div><div class="case-bottom"><div><b class="case-name">Aurora</b><small class="case-desc">35 possible items</small></div><span class="price">$49.00</span></div></a>
+    <a class="case" href="#open-case" style="--case-color:#dcecff22"><div class="case-art"><div style="font-size:55px;color:#dcecff">B</div></div><div class="case-bottom"><div><b class="case-name">Blackout</b><small class="case-desc">42 possible items</small></div><span class="price">$99.00</span></div></a>
+    <a class="case" href="#open-case" style="--case-color:#7d92ff33"><div class="case-art"><div style="font-size:55px;color:#7d92ff">N</div></div><div class="case-bottom"><div><b class="case-name">Nightfall</b><small class="case-desc">31 possible items</small></div><span class="price">$74.00</span></div></a>
+    <a class="case" href="#open-case" style="--case-color:#ffc85c33"><div class="case-art"><div style="font-size:55px;color:#ffc85c">R</div></div><div class="case-bottom"><div><b class="case-name">Royal</b><small class="case-desc">51 possible items</small></div><span class="price">$199.00</span></div></a>
+    <a class="case" href="#open-case" style="--case-color:#5ee6a733"><div class="case-art"><div style="font-size:55px;color:#5ee6a7">V</div></div><div class="case-bottom"><div><b class="case-name">Velocity</b><small class="case-desc">24 possible items</small></div><span class="price">$39.00</span></div></a>
+    <a class="case" href="#open-case" style="--case-color:#ff6b6b33"><div class="case-art"><div style="font-size:55px;color:#ff6b6b">O</div></div><div class="case-bottom"><div><b class="case-name">Omega</b><small class="case-desc">63 possible items</small></div><span class="price">$299.00</span></div></a>
+  </div>
+</section>
+
+<!-- CASE OPEN -->
+<section class="page" id="open-case">
+  <div class="page-title">
+    <div><div class="kicker">CASE OPENING</div><h1>Nezzx Elite</h1></div>
+    <a class="btn" href="#cases">← Back</a>
+  </div>
+  <div class="open-stage">
+    <div class="kicker">PREVIEW ROLLER</div>
+    <div class="roller">
+      <div class="marker"></div>
+      <div class="roller-track">
+        <div class="skin" style="width:190px;--rarity:#69d8ff;--glow:#69d8ff18"><div class="skin-art"><div style="font-size:45px;color:#69d8ff">AK</div></div><div class="skin-info"><div class="rarity">Covert</div><div class="skin-name">Neon Rider</div></div></div>
+        <div class="skin" style="width:190px;--rarity:#8d6cff;--glow:#8d6cff18"><div class="skin-art"><div style="font-size:45px;color:#8d6cff">AWP</div></div><div class="skin-info"><div class="rarity">Covert</div><div class="skin-name">Fever Dream</div></div></div>
+        <div class="skin" style="width:190px;--rarity:#ff72bd;--glow:#ff72bd18"><div class="skin-art"><div style="font-size:45px;color:#ff72bd">G18</div></div><div class="skin-info"><div class="rarity">Classified</div><div class="skin-name">Neo-Noir</div></div></div>
+        <div class="skin" style="width:190px;--rarity:#ffc85c;--glow:#ffc85c18"><div class="skin-art"><div style="font-size:45px;color:#ffc85c">M4</div></div><div class="skin-info"><div class="rarity">Covert</div><div class="skin-name">The Emperor</div></div></div>
+        <div class="skin" style="width:190px;--rarity:#55e2a0;--glow:#55e2a018"><div class="skin-art"><div style="font-size:45px;color:#55e2a0">USP</div></div><div class="skin-info"><div class="rarity">Covert</div><div class="skin-name">Kill Confirmed</div></div></div>
+        <div class="skin" style="width:190px;--rarity:#69d8ff;--glow:#69d8ff18"><div class="skin-art"><div style="font-size:45px;color:#69d8ff">K</div></div><div class="skin-info"><div class="rarity">Extraordinary</div><div class="skin-name">Doppler</div></div></div>
+        <div class="skin" style="width:190px;--rarity:#ffc85c;--glow:#ffc85c18"><div class="skin-art"><div style="font-size:45px;color:#ffc85c">BF</div></div><div class="skin-info"><div class="rarity">Extraordinary</div><div class="skin-name">Fade</div></div></div>
+        <div class="skin" style="width:190px;--rarity:#ff6479;--glow:#ff647918"><div class="skin-art"><div style="font-size:45px;color:#ff6479">DL</div></div><div class="skin-info"><div class="rarity">Legendary</div><div class="skin-name">Dragon Lore</div></div></div>
+      </div>
+    </div>
+    <div class="open-controls">
+      <a class="btn btn-primary" href="#open-case">OPEN CASE · $24.00</a>
+      <a class="btn" href="#cases">Cancel</a>
+    </div>
+  </div>
+</section>
+
+<!-- UPGRADER -->
+<section class="page" id="upgrader">
+  <div class="page-title"><div><div class="kicker">PRECISION MODE</div><h1>Upgrader</h1></div><span class="small muted">STATIC DEMO</span></div>
+  <div class="upgrade-grid">
+    <div class="upgrade-box">
+      <div class="section-head"><b>Your item</b><span>Selected</span></div>
+      <div class="item-preview"><div style="font-size:58px;color:#ff4f7b;font-weight:1000">AK</div></div>
+      <div class="item-row"><span class="small muted">AK-47 · Neon Rider</span><strong>$84.20</strong></div>
+      <div class="section" style="display:flex;gap:7px"><a class="btn" href="#upgrader">AK-47</a><a class="btn" href="#upgrader">M4A1-S</a></div>
+    </div>
+    <div class="upgrade-box chance-box">
+      <div class="kicker">WIN CHANCE</div>
+      <div class="chance">50.00%</div>
+      <div class="multiplier">2.00× MULTIPLIER</div>
+      <div class="ring"><div class="ring-content"><b>50%</b><small>probability</small></div></div>
+      <div class="fake-range"></div>
+      <div class="quick-grid"><a href="#upgrader">5%</a><a href="#upgrader">10%</a><a href="#upgrader">25%</a><a href="#upgrader">50%</a><a href="#upgrader">75%</a><a href="#upgrader">90%</a><a href="#upgrader">95%</a><a href="#upgrader">99%</a></div>
+      <div style="margin-top:15px"><a class="btn btn-primary" href="#upgrader" style="display:block;padding-top:11px;padding-bottom:11px">UPGRADE · DEMO</a></div>
+    </div>
+    <div class="upgrade-box">
+      <div class="section-head"><b>Target item</b><span>2.00×</span></div>
+      <div class="item-preview"><div style="font-size:58px;color:#eaf5ff;font-weight:1000">M4</div></div>
+      <div class="item-row"><span class="small muted">M4A1-S · Printstream</span><strong>$168.40</strong></div>
+      <div class="section-head" style="margin-top:18px"><span>Recommended targets</span></div>
+      <div class="drop-line">
+        <div class="drop" style="--rarity:#69d8ff"><span class="bar"></span><strong>AWP Fever</strong><small>$72.15</small></div>
+        <div class="drop" style="--rarity:#ffc85c"><span class="bar"></span><strong>USP Kill</strong><small>$118.50</small></div>
+        <div class="drop" style="--rarity:#8d6cff"><span class="bar"></span><strong>AWP Dream</strong><small>$132.10</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE -->
+<section class="page" id="slide">
+  <div class="page-title"><div><div class="kicker">MULTIPLIER RUN</div><h1>Slide</h1></div></div>
+  <div class="panel"><div class="game-stage">
+    <div class="kicker">CURRENT MULTIPLIER</div>
+    <div class="multiplier-big">2.48×</div>
+    <div class="fake-progress"><span></span></div>
+    <p class="muted small" style="max-width:540px;line-height:1.8">
+      CSS-only visual state. The progress, multiplier and controls are presentation elements.
+    </p>
+    <div class="game-buttons">
+      <a class="btn" href="#slide">1.50×</a><a class="btn" href="#slide">2.00×</a><a class="btn" href="#slide">5.00×</a><a class="btn" href="#slide">10.00×</a><a class="btn btn-primary" href="#slide">START RUN</a>
+    </div>
+  </div></div>
+</section>
+
+<!-- MINES -->
+<section class="page" id="mines">
+  <div class="page-title"><div><div class="kicker">GRID MODE</div><h1>Mines</h1></div></div>
+  <div class="layout">
+    <div class="panel"><div class="panel-body">
+      <div class="mine-grid">
+        <a class="mine-cell" href="#mines">◆</a><a class="mine-cell" href="#mines">◆</a><a class="mine-cell" href="#mines">◆</a><a class="mine-cell" href="#mines">◆</a><a class="mine-cell" href="#mines">◆</a>
+        <a class="mine-cell" href="#mines">◆</a><a class="mine-cell" href="#mines">◆</a><a class="mine-cell" href="#mines">◆</a><a class="mine-cell" href="#mines">◆</a><a class="mine-cell" href="#mines">◆</a>
+        <a class="mine-cell" href="#mines">◆</a><a class="mine-cell" href="#mines">◆</a><a class="mine-cell" href="#mines">◆</a><a class="mine-cell" href="#mines">◆</a><a class="mine-cell" href="#mines">◆</a>
+        <a class="mine-cell" href="#mines">◆</a><a class="mine-cell" href="#mines">◆</a><a class="mine-cell" href="#mines">◆</a><a class="mine-cell" href="#mines">◆</a><a class="mine-cell" href="#mines">◆</a>
+        <a class="mine-cell" href="#mines">◆</a><a class="mine-cell" href="#mines">◆</a><a class="mine-cell" href="#mines">◆</a><a class="mine-cell" href="#mines">◆</a><a class="mine-cell" href="#mines">◆</a>
+      </div>
+    </div></div>
+    <div class="panel"><div class="panel-head"><b>Round</b></div><div class="panel-body">
+      <div class="stats" style="grid-template-columns:1fr 1fr"><div class="stat"><span class="stat-label">Multiplier</span><strong class="stat-value">1.82×</strong></div><div class="stat"><span class="stat-label">Safe</span><strong class="stat-value">4</strong></div></div>
+      <div class="section"><a class="btn btn-primary" href="#mines">NEW GAME</a><a class="btn" href="#mines">CASH OUT</a></div>
+    </div></div>
+  </div>
+</section>
+
+<!-- CHICKEN -->
+<section class="page" id="chicken">
+  <div class="page-title"><div><div class="kicker">CROSS THE GRID</div><h1>Chicken</h1></div></div>
+  <div class="panel"><div class="game-stage">
+    <div style="font-size:72px;font-weight:900;color:#d9e4eb">CHICKEN</div>
+    <div class="multiplier-big">3.28×</div>
+    <div class="fake-progress"><span style="width:68%"></span></div>
+    <p class="muted small">Advance through the virtual route. This is a static CSS presentation.</p>
+    <div class="game-buttons"><a class="btn" href="#chicken">SAFE STEP</a><a class="btn btn-red" href="#chicken">RISKY STEP</a><a class="btn btn-primary" href="#chicken">RESET</a></div>
+  </div></div>
+</section>
+
+<!-- KENO -->
+<section class="page" id="keno">
+  <div class="page-title"><div><div class="kicker">NUMBER DRAW</div><h1>Keno</h1></div></div>
+  <div class="panel"><div class="panel-body">
+    <div class="numbers">
+      <a class="num" href="#keno">1</a><a class="num" href="#keno">2</a><a class="num" href="#keno">3</a><a class="num" href="#keno">4</a><a class="num" href="#keno">5</a><a class="num" href="#keno">6</a><a class="num" href="#keno">7</a><a class="num" href="#keno">8</a>
+      <a class="num" href="#keno">9</a><a class="num" href="#keno">10</a><a class="num" href="#keno">11</a><a class="num" href="#keno">12</a><a class="num" href="#keno">13</a><a class="num" href="#keno">14</a><a class="num" href="#keno">15</a><a class="num" href="#keno">16</a>
+      <a class="num" href="#keno">17</a><a class="num" href="#keno">18</a><a class="num" href="#keno">19</a><a class="num" href="#keno">20</a><a class="num" href="#keno">21</a><a class="num" href="#keno">22</a><a class="num" href="#keno">23</a><a class="num" href="#keno">24</a>
+      <a class="num" href="#keno">25</a><a class="num" href="#keno">26</a><a class="num" href="#keno">27</a><a class="num" href="#keno">28</a><a class="num" href="#keno">29</a><a class="num" href="#keno">30</a><a class="num" href="#keno">31</a><a class="num" href="#keno">32</a>
+      <a class="num" href="#keno">33</a><a class="num" href="#keno">34</a><a class="num" href="#keno">35</a><a class="num" href="#keno">36</a><a class="num" href="#keno">37</a><a class="num" href="#keno">38</a><a class="num" href="#keno">39</a><a class="num" href="#keno">40</a>
+    </div>
+    <div style="text-align:center;margin-top:20px"><span class="small muted">Selected <b>0</b>/8</span><a class="btn btn-primary" href="#keno" style="margin-left:9px">DRAW</a></div>
+  </div></div>
+</section>
+
+<!-- INVENTORY -->
+<section class="page" id="inventory">
+  <div class="page-title"><div><div class="kicker">YOUR COLLECTION</div><h1>Inventory</h1></div><span class="small muted">14 items · $1,248.40</span></div>
+  <div class="search" style="max-width:none;margin-bottom:14px"><span class="search-icon">⌕</span><input type="search" placeholder="Search your items..."></div>
+  <div class="skin-grid">
+    <div class="skin" style="--rarity:#ff4f7b;--glow:#ff4f7b18"><div class="skin-art"><div style="font-size:46px;color:#ff4f7b">AK</div></div><div class="skin-info"><div class="rarity">Covert</div><div class="skin-name">AK-47 · Neon Rider</div><div class="skin-meta"><span>Field-Tested</span><strong>$84.20</strong></div></div></div>
+    <div class="skin" style="--rarity:#eef5ff;--glow:#eef5ff18"><div class="skin-art"><div style="font-size:46px;color:#eef5ff">M4</div></div><div class="skin-info"><div class="rarity">Covert</div><div class="skin-name">M4A1-S · Printstream</div><div class="skin-meta"><span>Minimal Wear</span><strong>$168.40</strong></div></div></div>
+    <div class="skin" style="--rarity:#9b76ff;--glow:#9b76ff18"><div class="skin-art"><div style="font-size:46px;color:#9b76ff">AWP</div></div><div class="skin-info"><div class="rarity">Covert</div><div class="skin-name">AWP · Fever Dream</div><div class="skin-meta"><span>Field-Tested</span><strong>$72.15</strong></div></div></div>
+    <div class="skin" style="--rarity:#ff72bd;--glow:#ff72bd18"><div class="skin-art"><div style="font-size:46px;color:#ff72bd">G18</div></div><div class="skin-info"><div class="rarity">Classified</div><div class="skin-name">Glock-18 · Neo-Noir</div><div class="skin-meta"><span>Minimal Wear</span><strong>$42.80</strong></div></div></div>
+    <div class="skin" style="--rarity:#ffc85c;--glow:#ffc85c18"><div class="skin-art"><div style="font-size:46px;color:#ffc85c">M4</div></div><div class="skin-info"><div class="rarity">Covert</div><div class="skin-name">M4A4 · The Emperor</div><div class="skin-meta"><span>Factory New</span><strong>$132.10</strong></div></div></div>
+    <div class="skin" style="--rarity:#55e2a0;--glow:#55e2a018"><div class="skin-art"><div style="font-size:46px;color:#55e2a0">USP</div></div><div class="skin-info"><div class="rarity">Covert</div><div class="skin-name">USP-S · Kill Confirmed</div><div class="skin-meta"><span>Field-Tested</span><strong>$118.50</strong></div></div></div>
+  </div>
+</section>
+
+<!-- REWARDS -->
+<section class="page" id="rewards">
+  <div class="page-title"><div><div class="kicker">PROGRESSION</div><h1>Rewards</h1></div></div>
+  <div class="stats">
+    <div class="stat"><span class="stat-label">Level</span><strong class="stat-value">27</strong><div class="progress" style="margin-top:10px"><span></span></div></div>
+    <div class="stat"><span class="stat-label">Daily streak</span><strong class="stat-value">12 days</strong></div>
+    <div class="stat"><span class="stat-label">Weekly XP</span><strong class="stat-value">4,820</strong></div>
+    <div class="stat"><span class="stat-label">Next reward</span><strong class="stat-value">1,000 ◈</strong></div>
+  </div>
+  <div class="section skin-grid">
+    <div class="panel"><div class="panel-body"><div class="kicker">REWARD 01</div><h3 style="margin-top:7px">Daily login</h3><p class="small muted">Claim 250 XP</p><a class="btn btn-primary" href="#rewards">CLAIM</a></div></div>
+    <div class="panel"><div class="panel-body"><div class="kicker">REWARD 02</div><h3 style="margin-top:7px">Battle streak</h3><p class="small muted">Win 3 battles</p><a class="btn" href="#rewards">2,000 XP</a></div></div>
+    <div class="panel"><div class="panel-body"><div class="kicker">REWARD 03</div><h3 style="margin-top:7px">Collector</h3><p class="small muted">Own 10 skins</p><a class="btn" href="#rewards">500 ◈</a></div></div>
+    <div class="panel"><div class="panel-body"><div class="kicker">REWARD 04</div><h3 style="margin-top:7px">Night Owl</h3><p class="small muted">Play after 00:00</p><a class="btn" href="#rewards">MYSTERY</a></div></div>
+  </div>
+</section>
+
+<!-- LEADERBOARD -->
+<section class="page" id="leaderboard">
+  <div class="page-title"><div><div class="kicker">RANKINGS</div><h1>Leaderboard</h1></div></div>
+  <div class="tabs"><a class="tab" href="#leaderboard">Weekly</a><a class="tab" href="#leaderboard">Monthly</a><a class="tab" href="#leaderboard">All time</a></div>
+  <div class="panel section"><div class="panel-body table-wrap">
+    <table><thead><tr><th>Rank</th><th>Player</th><th>Wins</th><th>Win rate</th><th>Winnings</th></tr></thead>
+    <tbody>
+      <tr><td><strong>#1</strong></td><td><strong>void</strong></td><td>241</td><td>82.0%</td><td><strong>$12,480</strong></td></tr>
+      <tr><td><strong>#2</strong></td><td><strong>nezzx</strong></td><td>224</td><td>79.9%</td><td><strong>$11,650</strong></td></tr>
+      <tr><td><strong>#3</strong></td><td><strong>aero</strong></td><td>207</td><td>77.8%</td><td><strong>$10,820</strong></td></tr>
+      <tr><td><strong>#4</strong></td><td><strong>kryp</strong></td><td>190</td><td>75.7%</td><td><strong>$9,990</strong></td></tr>
+      <tr><td><strong>#5</strong></td><td><strong>mira</strong></td><td>181</td><td>73.2%</td><td><strong>$9,240</strong></td></tr>
+      <tr><td><strong>#6</strong></td><td><strong>qbit</strong></td><td>166</td><td>71.4%</td><td><strong>$8,610</strong></td></tr>
+      <tr><td><strong>#7</strong></td><td><strong>rune</strong></td><td>151</td><td>69.9%</td><td><strong>$7,940</strong></td></tr>
+      <tr><td><strong>#8</strong></td><td><strong>vexor</strong></td><td>144</td><td>68.7%</td><td><strong>$7,310</strong></td></tr>
+    </tbody></table>
+  </div></div>
+</section>
+
+<!-- FAIRNESS -->
+<section class="page" id="fairness">
+  <div class="page-title"><div><div class="kicker">TRANSPARENCY</div><h1>Fairness</h1></div></div>
+  <div class="layout">
+    <div class="panel"><div class="panel-head"><b>Verification data</b></div><div class="panel-body form">
+      <div class="field"><label>Game ID</label><input value="NB-2026-001849" readonly></div>
+      <div class="field"><label>Client seed</label><input value="nezzx-demo-client" readonly></div>
+      <div class="field"><label>Server seed hash</label><input value="9f1e2c5d7b9a0d31e84c...d10a" readonly></div>
+      <div class="field"><label>Nonce</label><input value="1849" readonly></div>
+      <a class="btn btn-primary" href="#fairness">VERIFY RESULT</a>
+    </div></div>
+    <div class="panel"><div class="panel-head"><b>How the interface works</b></div><div class="panel-body">
+      <p class="small muted" style="line-height:1.9">This build is deliberately CSS-only. It demonstrates the visual architecture, responsive layout, scrolling surfaces, cards, rollers, probability presentation and game screens. It does not connect to deposits, withdrawals or real-money gambling.</p>
+      <div class="code-box">CLIENT_SEED: nezzx-demo-client<br>SERVER_HASH: 9f1e2c5d7b9a...<br>NONCE: 1849<br>MODE: STATIC / CSS-FIRST</div>
+    </div></div>
+  </div>
+</section>
+
+<!-- PROFILE -->
+<section class="page" id="profile">
+  <div class="page-title"><div><div class="kicker">ACCOUNT</div><h1>Profile</h1></div><a class="btn" href="#settings-panel">Settings</a></div>
+  <div class="profile-grid">
+    <div class="panel profile-card"><div class="panel-body">
+      <div class="big-avatar">N</div>
+      <h2>nezzx</h2>
+      <span class="small muted">LEVEL 27</span>
+      <div class="progress" style="margin:17px 0"><span></span></div>
+      <div class="stats" style="grid-template-columns:1fr 1fr"><div class="stat"><span class="stat-label">Wins</span><strong class="stat-value">184</strong></div><div class="stat"><span class="stat-label">Losses</span><strong class="stat-value">71</strong></div></div>
+    </div></div>
+    <div class="panel"><div class="panel-head"><b>Recent activity</b></div><div class="panel-body">
+      <div class="activity"><div class="avatar">N</div><div class="activity-grow"><b>Battle #9180</b><span>4 player battle · completed</span></div><strong>WIN</strong></div>
+      <div class="activity"><div class="avatar">N</div><div class="activity-grow"><b>Nezzx Elite</b><span>Case opening · AK-47 Neon Rider</span></div><strong>$84</strong></div>
+      <div class="activity"><div class="avatar">N</div><div class="activity-grow"><b>Upgrader</b><span>Target M4A1-S Printstream</span></div><strong>50%</strong></div>
+      <div class="activity"><div class="avatar">N</div><div class="activity-grow"><b>Reward</b><span>Daily progression</span></div><strong>+250 XP</strong></div>
+    </div></div>
+  </div>
+</section>
+
+<div class="footer">NEZZX BATTLE · Original CSS-first static frontend · No JavaScript · Virtual credits only</div>
+
+</main>
+</div>
+
+<nav class="mobile-nav">
+  <a href="#home"><i>⌂</i>Home</a>
+  <a href="#battles"><i>⚔</i>Battle</a>
+  <a href="#cases"><i>▣</i>Cases</a>
+  <a href="#upgrader"><i>↗</i>Upgrade</a>
+  <a href="#inventory"><i>▤</i>Items</a>
+</nav>
+
+<!-- CSS-only modal -->
+<div class="modal" id="battle-create">
+  <div class="modal-card">
+    <div class="modal-top">
+      <div><div class="kicker">NEW BATTLE</div><h2 style="margin-top:5px">Create Battle</h2></div>
+      <a class="close" href="#battles">×</a>
+    </div>
+    <div class="form">
+      <div class="field"><label>Players</label><select><option>2 Players</option><option>3 Players</option><option>4 Players</option></select></div>
+      <div class="field"><label>Visibility</label><select><option>Public</option><option>Private</option></select></div>
+      <div class="field"><label>Cases</label><input value="Nezzx Elite, Phantom, Aurora"></div>
+      <div class="field"><label>Mode</label><select><option>Normal</option><option>Twist</option><option>Elimination</option></select></div>
+      <a class="btn btn-primary" href="#battles">CREATE BATTLE</a>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="settings-panel">
+  <div class="modal-card">
+    <div class="modal-top">
+      <div><div class="kicker">PROFILE</div><h2 style="margin-top:5px">Settings</h2></div>
+      <a class="close" href="#profile">×</a>
+    </div>
+    <div class="form">
+      <div class="field"><label>Display name</label><input value="nezzx"></div>
+      <div class="field"><label>Interface</label><select><option>Dark</option><option>System</option></select></div>
+      <div class="field"><label>Animations</label><select><option>Enabled</option><option>Reduced</option></select></div>
+      <a class="btn btn-primary" href="#profile">SAVE</a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
